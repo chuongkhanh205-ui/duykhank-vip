@@ -1,28 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>VIP PRO MAX</title>
+</head>
+
+<body style="background:black; color:white; text-align:center;">
+
+<h1>🔥 CHÀO MỪNG VIP 🔥</h1>
+<p>Bạn đã vào khu vực VIP 😎</p>
+
+<button onclick="logout()">Thoát</button>
+
 <script>
-async function checkKey() {
-  let input = document.getElementById("keyInput").value.trim();
-
-  let res = await fetch("./key.json?v=" + Date.now());
-  let data = await res.json();
-
-  let valid = data.keys.find(k => k.key.toLowerCase() === input.toLowerCase());
-
-  if(valid){
-    if(valid.expired === "never"){
-      window.location.href = "./vip.html";
-      return;
-    }
-
-    let today = new Date();
-    let expired = new Date(valid.expired);
-
-    if(today > expired){
-      alert("Key đã hết hạn!");
-    } else {
-      window.location.href = "./vip.html";
-    }
-  } else {
-    alert("Sai key!");
-  }
+function logout(){
+  window.location.href = "./index.html";
 }
 </script>
+
+</body>
+</html>
