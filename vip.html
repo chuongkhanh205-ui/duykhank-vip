@@ -9,19 +9,13 @@ body{
   margin:0;
   background:black;
   color:#0f0;
-  font-family: monospace;
   text-align:center;
-  overflow:hidden;
+  font-family:monospace;
 }
 
 h1{
   margin-top:100px;
-  font-size:35px;
   text-shadow:0 0 10px #0f0;
-}
-
-p{
-  color:#aaa;
 }
 
 button{
@@ -31,71 +25,28 @@ button{
   border-radius:20px;
   background:#0f0;
   color:black;
-  font-weight:bold;
   cursor:pointer;
-  box-shadow:0 0 10px #0f0;
-}
-
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
-
-<h1>🔥 VIP ACCESS GRANTED 🔥</h1>
-<p>Chào mừng bạn vào khu vực tối mật 😎</p>
+<h1>🔥 VIP ACCESS 🔥</h1>
+<p>Chào mừng bạn 😎</p>
 
 <button onclick="logout()">Thoát</button>
 
 <script>
-// logout
+// chặn vào thẳng
+if(localStorage.getItem("vip") !== "true"){
+  window.location.href = "index.html";
+}
+
 function logout(){
-  window.location.href = "./index.html";
+  localStorage.removeItem("vip");
+  window.location.href = "index.html";
 }
-
-// MATRIX EFFECT
-let canvas = document.getElementById("matrix");
-let ctx = canvas.getContext("2d");
-
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-let letters = "01VIPDUYKHANH";
-letters = letters.split("");
-
-let fontSize = 14;
-let columns = canvas.width/fontSize;
-
-let drops = [];
-for(let x=0; x<columns; x++)
-  drops[x] = 1;
-
-function draw(){
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  ctx.fillStyle = "#0f0";
-  ctx.font = fontSize + "px monospace";
-
-  for(let i=0; i<drops.length; i++){
-    let text = letters[Math.floor(Math.random()*letters.length)];
-    ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-
-    if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
-      drops[i] = 0;
-
-    drops[i]++;
-  }
-}
-
-setInterval(draw, 33);
 </script>
 
 </body>
