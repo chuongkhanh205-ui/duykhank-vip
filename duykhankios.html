@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background: #0b0f1a;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+  font-family: Arial;
+}
+.box {
+  background: #111827;
+  padding: 20px;
+  border-radius: 15px;
+  width: 300px;
+  margin: auto;
+}
+input {
+  padding: 10px;
+  margin: 10px;
+  width: 90%;
+}
+button {
+  padding: 10px;
+  background: #00ffcc;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>DUYKHANH LICENSE</h2>
+  <input id="key" placeholder="Nhập key">
+  <button onclick="checkKey()">CHECK</button>
+  <p id="kq"></p>
+</div>
+
+<script>
+const keys = ["DUY123", "VIP999"];
+
+function checkKey() {
+  let k = document.getElementById("key").value;
+  if(keys.includes(k)){
+    document.getElementById("kq").innerHTML = "✔ Đúng key";
+  } else {
+    document.getElementById("kq").innerHTML = "❌ Sai key";
+  }
+}
+</script>
+
+</body>
+</html>
