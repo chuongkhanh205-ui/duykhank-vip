@@ -1,53 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  background: #0b0f1a;
-  color: white;
-  text-align: center;
-  padding-top: 100px;
-  font-family: Arial;
-}
-.box {
-  background: #111827;
-  padding: 20px;
-  border-radius: 15px;
-  width: 300px;
-  margin: auto;
-}
-input {
-  padding: 10px;
-  margin: 10px;
-  width: 90%;
-}
-button {
-  padding: 10px;
-  background: #00ffcc;
-  border: none;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>DuyKhanh VIP</title>
 </head>
 
-<body>
+<body style="background:black; color:white; text-align:center;">
 
-<div class="box">
-  <h2>DUYKHANH LICENSE</h2>
-  <input id="key" placeholder="Nhập key">
-  <button onclick="checkKey()">CHECK</button>
-  <p id="kq"></p>
-</div>
+<h1>🔥 Nhập Key 🔥</h1>
+
+<input id="keyInput" placeholder="Nhập key">
+<br><br>
+<button onclick="checkKey()">Vào</button>
 
 <script>
-const keys = ["DUY123", "VIP999"];
+async function checkKey() {
+  let input = document.getElementById("keyInput").value.trim().toLowerCase();
 
-function checkKey() {
-  let k = document.getElementById("key").value;
-  if(keys.includes(k)){
-    document.getElementById("kq").innerHTML = "✔ Đúng key";
-  } else {
-    document.getElementById("kq").innerHTML = "❌ Sai key";
+  try {
+    let res = await fetch("./key.json?v=" + Date.now());
+    let data = await res.json();
+
+    let valid = data.keys.find(k => k.key.toLowerCase() === input);
+
+    if(valid){
+      if(valid.expired === "never"){
+        alert("VIP vĩnh viễn");
+        return;
+      }
+
+      let today = new Date();
+      let expired = new Date(valid.expired);
+
+      if(today > expired){
+        alert("Key hết hạn!");
+      } else {
+        alert("Key đúng!");
+      }
+    } else {
+      alert("Sai key!");
+    }
+
+  } catch (e) {
+    alert("Không load được key.json (404)");
   }
 }
 </script>
