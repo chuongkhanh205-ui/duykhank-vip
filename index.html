@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>DuyKhanh VIP</title>
 </head>
 
@@ -17,15 +18,14 @@ async function checkKey() {
   let input = document.getElementById("keyInput").value.trim().toLowerCase();
 
   try {
-    // fix 404 + cache
-    let res = await fetch("./key.json?v=" + Date.now());
+    let res = await fetch("key.json?v=" + Date.now());
     let data = await res.json();
 
     let valid = data.keys.find(k => k.key.toLowerCase() === input);
 
     if(valid){
       if(valid.expired === "never"){
-        alert("Key VIP vĩnh viễn!");
+        alert("VIP vĩnh viễn");
         return;
       }
 
@@ -33,16 +33,15 @@ async function checkKey() {
       let expired = new Date(valid.expired);
 
       if(today > expired){
-        alert("Key đã hết hạn!");
+        alert("Key hết hạn!");
       } else {
-        alert("Key hợp lệ!");
+        alert("Key đúng!");
       }
-
     } else {
       alert("Sai key!");
     }
 
-  } catch(e){
+  } catch (e) {
     alert("Lỗi load key.json (404)");
   }
 }
