@@ -12,7 +12,6 @@ body{
   font-family:monospace;
 }
 
-/* HEADER */
 .header{
   padding:15px;
   text-align:center;
@@ -21,7 +20,6 @@ body{
   box-shadow:0 0 10px #0f0;
 }
 
-/* MENU */
 .menu{
   display:flex;
   justify-content:center;
@@ -37,7 +35,6 @@ body{
   cursor:pointer;
 }
 
-/* BOX */
 .box{
   margin:30px;
   padding:20px;
@@ -46,7 +43,6 @@ body{
   display:none;
 }
 
-/* ACTIVE */
 .active{
   display:block;
 }
@@ -73,53 +69,41 @@ button.action{
   <button onclick="logout()">Thoát</button>
 </div>
 
-<!-- HOME -->
 <div id="home" class="box active">
   <h2>Chào VIP 😎</h2>
   <p>Hệ thống đã kích hoạt</p>
 </div>
 
-<!-- GAME -->
 <div id="game" class="box">
   <h2>🎮 Game</h2>
-
   <button class="action" onclick="openGame()">Vào Game</button>
-
 </div>
 
-<!-- TOOL -->
 <div id="tool" class="box">
   <h2>⚙️ Tool VIP</h2>
-
   <button class="action" onclick="fakeHack()">Aimbot</button>
   <button class="action" onclick="fakeHack()">Wallhack</button>
   <button class="action" onclick="fakeHack()">Speed</button>
-
 </div>
 
 <script>
-// chặn vào thẳng
 if(localStorage.getItem("vip") !== "true"){
   window.location.href = "index.html";
 }
 
-// chuyển tab
 function show(id){
   document.querySelectorAll(".box").forEach(b => b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-// mở game
 function openGame(){
-  window.location.href = "https://example-game.com";
+  window.location.href = "https://google.com";
 }
 
-// giả lập tool
 function fakeHack(){
   alert("🔥 Kích hoạt thành công (demo)");
 }
 
-// logout
 function logout(){
   localStorage.removeItem("vip");
   window.location.href = "index.html";
