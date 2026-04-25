@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>DuyKhanh VIP</title>
-</head>
-
-<body style="background:black; color:white; text-align:center;">
-
-<h1>🔥 Nhập Key 🔥</h1>
-
-<input id="keyInput" placeholder="Nhập key">
-<br><br>
-<button onclick="checkKey()">Vào</button>
-
 <script>
 async function checkKey() {
   let input = document.getElementById("keyInput").value.trim().toLowerCase();
 
-  let res = await fetch("key.json");
+  let res = await fetch("key.json?v=" + Date.now());
   let data = await res.json();
 
   let valid = data.keys.find(k => k.key.toLowerCase() === input);
@@ -24,7 +10,6 @@ async function checkKey() {
   if(valid){
     if(valid.expired === "never"){
       alert("Key VIP vĩnh viễn!");
-      // window.location.href = "duykhankios.html";
       return;
     }
 
@@ -35,14 +20,9 @@ async function checkKey() {
       alert("Key đã hết hạn!");
     } else {
       alert("Key hợp lệ!");
-      // window.location.href = "duykhankios.html";
     }
-
   } else {
     alert("Sai key!");
   }
 }
 </script>
-
-</body>
-</html>
