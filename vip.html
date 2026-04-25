@@ -2,29 +2,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>VIP PRO MAX</title>
+<title>VIP TOOL</title>
 
 <style>
 body{
   margin:0;
   background:black;
   color:#0f0;
-  text-align:center;
   font-family:monospace;
 }
 
-h1{
-  margin-top:100px;
-  text-shadow:0 0 10px #0f0;
+/* HEADER */
+.header{
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  background:#111;
+  box-shadow:0 0 10px #0f0;
 }
 
-button{
+/* MENU */
+.menu{
+  display:flex;
+  justify-content:center;
+  gap:10px;
   margin-top:20px;
-  padding:10px 25px;
-  border:none;
-  border-radius:20px;
+}
+
+.menu button{
+  padding:10px 20px;
+  background:black;
+  border:1px solid #0f0;
+  color:#0f0;
+  cursor:pointer;
+}
+
+/* BOX */
+.box{
+  margin:30px;
+  padding:20px;
+  border:1px solid #0f0;
+  box-shadow:0 0 10px #0f0;
+  display:none;
+}
+
+/* ACTIVE */
+.active{
+  display:block;
+}
+
+button.action{
+  margin:10px;
+  padding:10px 20px;
   background:#0f0;
   color:black;
+  border:none;
   cursor:pointer;
 }
 </style>
@@ -32,10 +64,38 @@ button{
 
 <body>
 
-<h1>🔥 VIP ACCESS 🔥</h1>
-<p>Chào mừng bạn 😎</p>
+<div class="header">🔥 VIP TOOL GAME 🔥</div>
 
-<button onclick="logout()">Thoát</button>
+<div class="menu">
+  <button onclick="show('home')">Home</button>
+  <button onclick="show('game')">Game</button>
+  <button onclick="show('tool')">Tool</button>
+  <button onclick="logout()">Thoát</button>
+</div>
+
+<!-- HOME -->
+<div id="home" class="box active">
+  <h2>Chào VIP 😎</h2>
+  <p>Hệ thống đã kích hoạt</p>
+</div>
+
+<!-- GAME -->
+<div id="game" class="box">
+  <h2>🎮 Game</h2>
+
+  <button class="action" onclick="openGame()">Vào Game</button>
+
+</div>
+
+<!-- TOOL -->
+<div id="tool" class="box">
+  <h2>⚙️ Tool VIP</h2>
+
+  <button class="action" onclick="fakeHack()">Aimbot</button>
+  <button class="action" onclick="fakeHack()">Wallhack</button>
+  <button class="action" onclick="fakeHack()">Speed</button>
+
+</div>
 
 <script>
 // chặn vào thẳng
@@ -43,6 +103,23 @@ if(localStorage.getItem("vip") !== "true"){
   window.location.href = "index.html";
 }
 
+// chuyển tab
+function show(id){
+  document.querySelectorAll(".box").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+// mở game
+function openGame(){
+  window.location.href = "https://example-game.com";
+}
+
+// giả lập tool
+function fakeHack(){
+  alert("🔥 Kích hoạt thành công (demo)");
+}
+
+// logout
 function logout(){
   localStorage.removeItem("vip");
   window.location.href = "index.html";
