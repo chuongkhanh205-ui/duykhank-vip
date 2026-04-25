@@ -1,21 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>DuyKhanh VIP</title>
+<meta charset="UTF-8">
+<title>DuyKhanh VIP</title>
+
+<style>
+body{
+  background: linear-gradient(135deg,#000,#111,#000);
+  color:white;
+  text-align:center;
+  font-family: Arial;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Box chính */
+.box{
+  background: rgba(255,255,255,0.05);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(255,0,0,0.3);
+  width:300px;
+}
+
+/* Tiêu đề */
+h1{
+  font-size:28px;
+  margin-bottom:20px;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+  from { text-shadow:0 0 10px red; }
+  to { text-shadow:0 0 25px orange; }
+}
+
+/* Input */
+input{
+  width:90%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:15px;
+  outline:none;
+}
+
+/* Button */
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background: linear-gradient(45deg, red, orange);
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+/* Thông báo */
+#msg{
+  margin-top:15px;
+  font-weight:bold;
+}
+</style>
+
 </head>
 
-<body style="background:black; color:white; text-align:center;">
+<body>
 
-<h1>🔥 Nhập Key 🔥</h1>
+<div class="box" id="loginBox">
+  <h1>🔥 NHẬP KEY 🔥</h1>
 
-<input id="keyInput" placeholder="Nhập key">
-<br><br>
-<button onclick="checkKey()">Vào</button>
+  <input id="keyInput" placeholder="Nhập key...">
+  <br>
+  <button onclick="checkKey()">Vào</button>
+
+  <div id="msg"></div>
+</div>
 
 <script>
 async function checkKey() {
   let input = document.getElementById("keyInput").value.trim().toLowerCase();
+  let msg = document.getElementById("msg");
 
   try {
     let res = await fetch("./key.json?v=" + Date.now());
@@ -24,25 +96,33 @@ async function checkKey() {
     let valid = data.keys.find(k => k.key.toLowerCase() === input);
 
     if(valid){
-      if(valid.expired === "never"){
-        alert("VIP vĩnh viễn");
-        return;
+      if(valid.expired !== "never"){
+        let today = new Date();
+        let expired = new Date(valid.expired);
+
+        if(today > expired){
+          msg.style.color = "red";
+          msg.innerText = "❌ Key đã hết hạn!";
+          return;
+        }
       }
 
-      let today = new Date();
-      let expired = new Date(valid.expired);
+      // 🔥 VIP UNLOCK
+      document.body.innerHTML = `
+        <h1 style="color:lime; animation: glow 1s infinite alternate;">
+          🔥 VIP UNLOCK 🔥
+        </h1>
+        <p>Chào mừng bạn đến khu VIP 😎</p>
+      `;
 
-      if(today > expired){
-        alert("Key hết hạn!");
-      } else {
-        alert("Key đúng!");
-      }
     } else {
-      alert("Sai key!");
+      msg.style.color = "red";
+      msg.innerText = "❌ Sai key!";
     }
 
-  } catch (e) {
-    alert("Không load được key.json (404)");
+  } catch(e){
+    msg.style.color = "orange";
+    msg.innerText = "⚠️ Lỗi load key.json";
   }
 }
 </script>
