@@ -6,11 +6,18 @@
 
 <body style="background:black; color:white; text-align:center;">
 
-<h1>🔥 Nhập Key 🔥</h1>
+<div id="loginBox">
+  <h1>🔥 Nhập Key 🔥</h1>
+  <input id="keyInput" placeholder="Nhập key">
+  <br><br>
+  <button onclick="checkKey()">Vào</button>
+  <p id="msg" style="color:red;"></p>
+</div>
 
-<input id="keyInput" placeholder="Nhập key">
-<br><br>
-<button onclick="checkKey()">Vào</button>
+<div id="content" style="display:none;">
+  <h1>🔥 Web VIP 🔥</h1>
+  <p>Chào mừng bạn vào hệ thống 🔥</p>
+</div>
 
 <script>
 async function checkKey() {
@@ -22,9 +29,39 @@ async function checkKey() {
   let valid = data.keys.find(k => k.key === input);
 
   if(valid){
-    alert("Key đúng!");
+    let today = new Date().toISOString().split("T")[0];
+
+    if(valid.expired >= today){
+      localStorage.setItem("vip_key", input);
+      showContent();
+    } else {
+      document.getElementById("msg").innerText = "Key đã hết hạn!";
+    }
   } else {
-    alert("Sai key!");
+    document.getElementById("msg").innerText = "Sai key!";
+  }
+}
+
+function showContent(){
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("content").style.display = "block";
+}
+
+// auto login
+window.onload = async function(){
+  let savedKey = localStorage.getItem("vip_key");
+  if(savedKey){
+    let res = await fetch("key.json");
+    let data = await res.json();
+
+    let valid = data.keys.find(k => k.key === savedKey);
+
+    if(valid){
+      let today = new Date().toISOString().split("T")[0];
+      if(valid.expired >= today){
+        showContent();
+      }
+    }
   }
 }
 </script>
